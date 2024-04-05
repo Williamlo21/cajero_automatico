@@ -1,4 +1,5 @@
 import mysql.connector
+# conexion
 
 def db():
     mydb = mysql.connector.connect(
@@ -17,19 +18,63 @@ def crearDatabase():
 
     mycursor.execute("CREATE DATABASE IF NOT EXISTS cajero_automatico")
     mycursor.execute("USE cajero_automatico")
-    mycursor.execute("""CREATE TABLE IF NOT EXISTS cuentas_bancaria (
-                        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-                        numero_cuenta INT UNSIGNED NOT NULL,
-                        clave INT UNSIGNED NOT NULL,
-                        titular VARCHAR(50) NOT NULL,
-                        saldo BIGINT UNSIGNED NOT NULL,
-                        tipo_cuenta VARCHAR(50) NOT NULL,
-                        create_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                        PRIMARY KEY (id),
-                        UNIQUE KEY numero_cuenta (numero_cuenta)
-                    )""")
+    mycursor.execute("""CREATE TABLE IF NOT EXISTS usuarios (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        nombres VARCHAR(50) NOT NULL,
+        apellidos VARCHAR(50) NOT NULL,
+        numero_documento VARCHAR(50) NOT NULL,
+        PRIMARY KEY (id),
+        UNIQUE KEY usuario_unico (nombres, apellidos, numero_documento))""")
+    mycursor.execute("""
+        CREATE TABLE IF NOT EXISTS cuenta_bancaria (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        numero_cuenta INT UNSIGNED NOT NULL,
+        user_titular_id VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        saldo DECIMAL(20, 2) UNSIGNED NOT NULL,
+        tipo_cuenta ENUM('AHORRO', 'NEQUI', 'A LA MANO', 'CREDITO') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        create_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        tope DECIMAL(20, 2) NOT NULL DEFAULT '2000000.00',
+        PRIMARY KEY (id),
+        UNIQUE KEY cuenta_unica (numero_cuenta) USING BTREE)""")
     
+    mycursor.execute("""CREATE TABLE IF NOT EXISTS cuentas_inscritas (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        cuenta_bancaria_id BIGINT UNSIGNED NOT NULL,
+        cuenta_bancaria_inscrita_id BIGINT UNSIGNED NOT NULL,
+        create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        UNIQUE KEY cuenta_inscrita_unica (cuenta_bancaria_id, cuenta_bancaria_inscrita_id),
+        KEY FK_cuentas_inscritas_cuenta_bancaria_2 (cuenta_bancaria_inscrita_id),
+        CONSTRAINT FK_cuentas_inscritas_cuenta_bancaria FOREIGN KEY (cuenta_bancaria_id) REFERENCES cuenta_bancaria (id) ON DELETE CASCADE ON UPDATE CASCADE,
+        CONSTRAINT FK_cuentas_inscritas_cuenta_bancaria_2 FOREIGN KEY (cuenta_bancaria_inscrita_id) REFERENCES cuenta_bancaria (id) ON DELETE CASCADE ON UPDATE CASCADE)""")
+    mycursor.execute("""CREATE TABLE IF NOT EXISTS tarjetas (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        numero_tarjeta INT UNSIGNED NOT NULL,
+        cuenta_bancaria_id BIGINT UNSIGNED NOT NULL,
+        tipo_tarjeta ENUM('CREDITO', 'DEBITO') NOT NULL,
+        fecha_vencimiento DATE DEFAULT NULL,
+        codigo_cvc INT NOT NULL,
+        PRIMARY KEY (id),
+        UNIQUE KEY tarjeta_unica (numero_tarjeta),
+        KEY FK_tarjetas_cuenta_bancaria (cuenta_bancaria_id),
+        CONSTRAINT FK_tarjetas_cuenta_bancaria FOREIGN KEY (cuenta_bancaria_id) REFERENCES cuenta_bancaria (id) ON DELETE CASCADE ON UPDATE CASCADE)""")
+    mycursor.execute("""CREATE TABLE IF NOT EXISTS transacciones (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        tipo_transaccion ENUM('TRANSFERENCIA', 'RETIRO', 'AVANCE', 'PAGO') NOT NULL,
+        cuenta_bancaria_origen_id BIGINT UNSIGNED NOT NULL,
+        cuenta_bancaria_destino_id BIGINT UNSIGNED DEFAULT NULL,
+        saldo DECIMAL(20, 2) UNSIGNED NOT NULL,
+        descripcion VARCHAR(50) NOT NULL,
+        fecha DATE NOT NULL ,
+        create_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY FK_transacciones_cuenta_bancaria (cuenta_bancaria_origen_id),
+        KEY FK_transacciones_cuenta_bancaria_2 (cuenta_bancaria_destino_id),
+        CONSTRAINT FK_transacciones_cuenta_bancaria FOREIGN KEY (cuenta_bancaria_origen_id) REFERENCES cuenta_bancaria (id) ON DELETE CASCADE ON UPDATE CASCADE,
+        CONSTRAINT FK_transacciones_cuenta_bancaria_2 FOREIGN KEY (cuenta_bancaria_destino_id) REFERENCES cuenta_bancaria (id) ON DELETE CASCADE ON UPDATE CASCADE)""")
     mydb.commit()
 
     mycursor.close()
@@ -63,7 +108,4 @@ def verificar_conexion():
 
     except mysql.connector.Error as error:
         print("Error al conectar a la base de datos:", error)
-
-# Verificar la conexión
 # verificar_conexion()
-# db()
