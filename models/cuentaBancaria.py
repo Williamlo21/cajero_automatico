@@ -1,10 +1,9 @@
-# from ..database import conexionDB
+from database.conexionDB import Conexion
 
-
-
-class cuentaAhorro:
+class cuentaBancaria():
 
     def __init__(self, id, numero_cuenta, clave, titular, saldo, tipo_cuenta ):
+        self.__Conexion = Conexion()
         self.id = id
         self.numero_cuenta = numero_cuenta
         self.clave = clave
@@ -16,4 +15,4 @@ class cuentaAhorro:
         print("hola mundo")
 
 
-cuentaAhorro.store()
+cuentaBancaria.store()
