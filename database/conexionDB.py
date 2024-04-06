@@ -11,12 +11,12 @@ class Conexion():
         )
 
         self.mycursor = self.mydb.cursor()
-        self.crearDatabase()
+        # funcion para crear la base de datos
         # self.mycursor = self.crearDatabase()
 
     def crearDatabase(self):
 
-        # mycursor.execute("CREATE DATABASE IF NOT EXISTS cajero_automatico")
+        self.mycursor.execute("CREATE DATABASE IF NOT EXISTS cajero_automatico")
         self.mycursor.execute("USE cajero_automatico")
         self.mycursor.execute("""CREATE TABLE IF NOT EXISTS usuarios (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
