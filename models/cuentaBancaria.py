@@ -1,4 +1,5 @@
 from database.conexionDB import Conexion
+import decimal
 
 class CuentaBancaria():
 
@@ -22,11 +23,14 @@ class CuentaBancaria():
     def realizarRetiro(cuenta, monto):
         idCuenta = cuenta[0]
         topeCuenta = cuenta[7]
+        topeCuenta = decimal.Decimal(topeCuenta)
         tope = topeCuenta - monto
+        montoCuenta = cuenta[3]
+        montoDescontar = montoCuenta - monto
         conexion = Conexion()
         mycursor = conexion.mycursor
         try:    
-            mycursor.execute("UPDATE cuenta_bancaria SET saldo = %s, tope = %s WHERE id = %s",(monto, tope, idCuenta,))
+            mycursor.execute("UPDATE cuenta_bancaria SET saldo = %s, tope = %s WHERE id = %s",(montoDescontar, tope, idCuenta,))
             conexion.mydb.commit()
             return True
         except Exception as e:

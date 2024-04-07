@@ -1,5 +1,4 @@
 from models.tarjeta import Tarjeta
-from controllers.transaccionController import TransaccionController
 class TarjetaController():
     @staticmethod
     def insertarTarjeta():
@@ -13,7 +12,6 @@ class TarjetaController():
             clave = input("Ingrese la clave: ")
             if clave == claveTarjeta:
             
-                seleccionarMonto = TransaccionController()
-                seleccionarMonto.seleccionaMonto(confirmarTarjeta)
+                return confirmarTarjeta
             else:
                 print("Clave invalida.")
