@@ -1,4 +1,5 @@
 from models.cuentaBancaria import CuentaBancaria
+from controllers.cuentaBancariaController import CuentaBancariaController
 from models.transaccion import Transaccion
 # from retiroController import opcionRetiro
 from datetime import datetime
@@ -118,3 +119,106 @@ class TransaccionController():
             print("Restante de tope:", cuentaActualizada[7])  
             print("***********************************")
             print("***Gracias por preferirnos***")
+            
+    @staticmethod
+    def seleccionaMontoConCuenta():
+        print("***********************************")
+        print("...")
+        opciones = {
+            "1" : "$20.000",
+            "2" : "$50.000",
+            "3" : "$100.000",
+            "4" : "$200.000",
+            "5" : "$500.000",
+            "6" : "Otro",
+        }
+        
+        opcion_valida = False
+        while not opcion_valida:
+            for clave, valor in opciones.items():
+                print(clave + ": " + valor)
+            opcion = input("Digite el monto a retirar: ")
+            if opcion in opciones.keys():
+                opcion_valida = True
+            else:
+                print("Opción inválida. Por favor, seleccione una opción válida.")
+
+        return opcion
+    @staticmethod
+    def opcionMontoConCuenta(opcion, numero_cuenta):
+        opcion = int(opcion)
+        if opcion == 1:
+            monto = 20000
+            resultado = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if resultado:
+                saldo = resultado[3]
+                tope = resultado[7]
+                validar = TransaccionController.verificarMontoConCuenta(saldo, tope, monto)
+                if validar:
+                    return  monto
+        elif opcion == 2:
+            monto = 50000
+            resultado = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if resultado:
+                saldo = resultado[3]
+                tope = resultado[7]
+                validar = TransaccionController.verificarMontoConCuenta(saldo, tope, monto)
+                if validar:
+                    return  monto
+        elif opcion == 3:
+            monto = 100000
+            resultado = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if resultado:
+                saldo = resultado[3]
+                tope = resultado[7]
+                validar = TransaccionController.verificarMontoConCuenta(saldo, tope, monto)
+                if validar:
+                    return  monto
+        elif opcion == 4:
+            monto = 200000
+            resultado = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if resultado:
+                saldo = resultado[3]
+                tope = resultado[7]
+                validar = TransaccionController.verificarMontoConCuenta(saldo, tope, monto)
+                if validar:
+                    return  monto
+        elif opcion == 5:
+            monto = 500000
+            resultado = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if resultado:
+                saldo = resultado[3]
+                tope = resultado[7]
+                validar = TransaccionController.verificarMontoConCuenta(saldo, tope, monto)
+                if validar:
+                    return  monto
+        elif opcion == 6:
+            monto = input("Digite el monto que desea retirar: ")
+            resultado = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if resultado:
+                saldo = resultado[3]
+                tope = resultado[7]
+                validar = TransaccionController.verificarMontoConCuenta(saldo, tope, monto)
+                if validar:
+                    return  monto
+        else:
+            print("Por favor digite una opción valida")
+            # TransaccionController().seleccionaMonto(tarjeta)
+    
+    @staticmethod
+    def verificarMontoConCuenta(saldo, tope, monto):
+        saldo = decimal.Decimal(saldo)
+        tope = decimal.Decimal(tope)
+        monto = decimal.Decimal(monto)
+
+        if saldo >= monto:
+            if tope >= monto:
+                return True
+                
+            else:
+                print("***********************************")
+                print("Tope diario superado.")
+        else:
+            print("***********************************")
+            print("Saldo insuficiente.")
+    

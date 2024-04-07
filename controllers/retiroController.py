@@ -1,6 +1,7 @@
 from controllers.tarjetaController import TarjetaController
 from controllers.transaccionController import TransaccionController
 from models.cuentaBancaria import CuentaBancaria
+from controllers.cuentaBancariaController import CuentaBancariaController
 class Retiro():
     @staticmethod
     def tipoDeRetiro():
@@ -63,7 +64,21 @@ class Retiro():
                     print("...")
                     print('En esta opcion solamente puede realizar retiros de cuentas de ahorro')
         elif opcion == 3:
-            print("nequi")
+            print("***********************************")
+            print("...")
+            numero_cuenta = input("Digite su número de nequi: ")
+            cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if cuenta:
+                codigo = TarjetaController.codigoMensaje()
+                if codigo:
+                    opcion = TransaccionController.seleccionaMontoConCuenta()
+                    if opcion:
+                        monto = TransaccionController.opcionMontoConCuenta(opcion, numero_cuenta)
+                        if monto:
+                            retiro = CuentaBancariaController.realizarRetiroConCuenta(numero_cuenta, monto)
+                            if retiro:
+                                TransaccionController.imprimirRecibo(cuenta, monto)
+            
         elif opcion == 4:
             print("a la mano")
         elif opcion == 5:

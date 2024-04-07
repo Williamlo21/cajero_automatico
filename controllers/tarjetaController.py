@@ -1,4 +1,5 @@
 from models.tarjeta import Tarjeta
+import random
 class TarjetaController():
     @staticmethod
     def insertarTarjeta():
@@ -15,3 +16,20 @@ class TarjetaController():
                 return confirmarTarjeta
             else:
                 print("Clave invalida.")
+    @staticmethod
+    def codigoMensaje():
+        print("***********************************")
+        print("...")
+        numero_aleatorio = random.randint(100000, 999999)
+        print("***************************************")
+        print("*** Mensaje enviado por SMS: "+ str(numero_aleatorio) + " ***")
+        print("***************************************")
+        numeroMensaje = input("Digite código de verificación: ")
+        numeroMensaje = int(numeroMensaje)
+        if numero_aleatorio == numeroMensaje:
+            return True
+        else:
+            print("***********************************")
+            print("...")
+            print("Código de verificación errado.")
+            print("Por favor intente nuevamente.")
