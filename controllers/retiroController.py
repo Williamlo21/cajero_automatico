@@ -1,3 +1,4 @@
+from controllers.tarjetaController import TarjetaController
 class Retiro():
     @staticmethod
     def tipoDeRetiro():
@@ -20,7 +21,7 @@ class Retiro():
     def opcionRetiro(self, opcion):
         opcion = int(opcion)
         if opcion == 1:
-            print("cuenta de ahorro")
+            TarjetaController.insertarTarjeta()
         elif opcion == 2:
             print("cuenta de corriente")
         elif opcion == 3:
