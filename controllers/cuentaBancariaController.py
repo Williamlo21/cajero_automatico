@@ -12,3 +12,8 @@ class CuentaBancariaController():
         retiro = CuentaBancaria.realizarRetiro(cuenta, monto)
         if retiro:
             return True
+    @staticmethod
+    def consultarCuentaConTarjeta(tarjeta):
+        cuenta = CuentaBancaria.consultarCuenta(tarjeta)
+        if cuenta:
+            return cuenta

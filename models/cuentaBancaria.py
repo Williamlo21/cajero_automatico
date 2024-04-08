@@ -13,7 +13,7 @@ class CuentaBancaria():
         self.tipo_cuenta = tipo_cuenta
     @staticmethod
     def consultarCuenta(tarjeta):
-        cuenta = tarjeta[0]
+        cuenta = tarjeta[2]
         conexion = Conexion()
         mycursor = conexion.mycursor
         mycursor.execute("SELECT * FROM cuenta_bancaria WHERE id = %s", (cuenta,))
