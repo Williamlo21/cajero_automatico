@@ -10,14 +10,14 @@ class Tarjeta():
         mycursor = self.conexion.mycursor
         mycursor.execute("SELECT * FROM tarjetas WHERE numero_tarjeta = %s", (tarjeta,))
         resultado = mycursor.fetchone()
-        # fecha de vencimiento es el item 4
-        fecha_vencimiento = resultado[4]
-        # instanciamos el objeto datetime.now
-        dt = datetime.now()
-        # ahora creamos la variable con la fecha de hoy
-        now = dt.date()
 
         if resultado:
+            # fecha de vencimiento es el item 4
+            fecha_vencimiento = resultado[4]
+            # instanciamos el objeto datetime.now
+            dt = datetime.now()
+            # ahora creamos la variable con la fecha de hoy
+            now = dt.date()
             print("Tarjeta leida con exíto.")
             print("Validando la tarjeta, por favor espere.")
             print("...")

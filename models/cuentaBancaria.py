@@ -19,6 +19,7 @@ class CuentaBancaria():
         mycursor.execute("SELECT * FROM cuenta_bancaria WHERE id = %s", (cuenta,))
         resultado = mycursor.fetchone()
         return resultado
+    
     @staticmethod
     def realizarRetiro(cuenta, monto):
         idCuenta = cuenta[0]

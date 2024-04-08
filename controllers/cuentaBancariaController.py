@@ -17,3 +17,4 @@ class CuentaBancariaController():
         cuenta = CuentaBancaria.consultarCuenta(tarjeta)
         if cuenta:
             return cuenta
+    

@@ -1,5 +1,6 @@
 from controllers.tarjetaController import TarjetaController
 from controllers.cuentaBancariaController import CuentaBancariaController
+from controllers.cuentainscritaController import CuentaInscritaController
 class TransferenciaController():
     
     @staticmethod
@@ -28,14 +29,49 @@ class TransferenciaController():
             else:
                 print("Opción inválida. Por favor, seleccione una opción válida.")
         return opcion
+    
     @staticmethod
-    def opcionMenu(opcion):
+    def opcionMenu(opcion, cuentaOrigen):
         opcion = int(opcion)
         if opcion == 1:
-            cuentas = 0
+
+            cuentasInscritas = CuentaInscritaController.consultarCuentasInscritas(cuentaOrigen)
+            if cuentasInscritas:
+                # TransferenciaController.mostrarCuentasinscritas(cuentasInscritas)
+                opciones = CuentaInscritaController.mostrarCuentasInscritas(cuentasInscritas)
+                if opciones:
+                    cuentaBancariaDestino = CuentaInscritaController.escogerCuentaInscrita(opciones)
+                    if cuentaBancariaDestino:
+                        cuentaBancariaDestino = str(cuentaBancariaDestino)
+                        cuentaBancariaDestino = opciones[cuentaBancariaDestino]
+                        monto = TransferenciaController.solicitarMonto()
+                        if monto:
+                            saldoCuentaOrigen = cuentaOrigen[3]
+                            topeCuentaOrigen = cuentaOrigen[7]
+                            if saldoCuentaOrigen >= monto:
+                                if topeCuentaOrigen >= monto:
+                                    print("podemos transferir?")
+                                else:
+                                    print("Tope diario superado.")
+                            else:
+                                print("Saldo insuficiente.")
         elif opcion == 2:
             print("Cuentas no inscritas")
     @staticmethod
+    def solicitarMonto():
+        print("***********************************")
+        print("...")
+        while True:
+            monto = input("Digite el valor a transferir: ")
+            try:
+                monto = float(monto)
+                if monto > 0:
+                    return monto
+                else:
+                    print("Ingrese un valor positivo.")
+            except ValueError:
+                print("Ingrese un número entero positivo.")
+        
     def menuCuentas():
         opciones = {
             "1" : "Cuenta de ahorros",
@@ -59,22 +95,22 @@ class TransferenciaController():
         opcion = int(opcion)
         if opcion == 1:
             tarjeta = TarjetaController.insertarTarjeta()
-            tipoTarjeta = tarjeta[3]
-            if tipoTarjeta == 'DEBITO':
-                if tarjeta:
+            if tarjeta:
+                tipoTarjeta = tarjeta[3]
+                if tipoTarjeta == 'DEBITO':
                     cuenta = CuentaBancariaController.consultarCuentaConTarjeta(tarjeta)
                     tipoCuenta = cuenta[4]
                     if tipoCuenta == 'AHORRO':
                         opcion = TransferenciaController.menuTransferencias()
-                        TransferenciaController.opcionMenu(opcion)
+                        TransferenciaController.opcionMenu(opcion, cuenta)
                     else:
                         print("***********************************")
                         print("...")
                         print('En esta opcion solamente puede realizar transferencias desde cuentas de ahorro')
-            else:
-                print("***********************************")
-                print("...")
-                print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
+                else:
+                    print("***********************************")
+                    print("...")
+                    print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
         elif opcion == 2:
             tarjeta = TarjetaController.insertarTarjeta()
             tipoTarjeta = tarjeta[3]

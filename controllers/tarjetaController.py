@@ -17,6 +17,7 @@ class TarjetaController():
                 return confirmarTarjeta
             else:
                 print("Clave invalida.")
+        
     @staticmethod
     def codigoMensaje():
         print("***********************************")
