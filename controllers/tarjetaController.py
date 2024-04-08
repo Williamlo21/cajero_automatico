@@ -1,4 +1,5 @@
 from models.tarjeta import Tarjeta
+from controllers.transaccionController import TransaccionController
 import random
 class TarjetaController():
     @staticmethod
@@ -33,3 +34,5 @@ class TarjetaController():
             print("...")
             print("Código de verificación errado.")
             print("Por favor intente nuevamente.")
+    # @staticmethod
+    

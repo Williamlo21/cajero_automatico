@@ -1,4 +1,5 @@
 from controllers.retiroController import Retiro
+from controllers.avanceController import AvanceController
 class Menu():
     @staticmethod
     def menuPrincipal():
@@ -23,7 +24,7 @@ class Menu():
         if opcion == 1:
             Retiro.tipoDeRetiro()
         elif opcion == 2:
-            print("Escogiste avance")
+            AvanceController.principal()
         elif opcion == 3:
             print("Realizar transferencia")
         elif opcion == 4:

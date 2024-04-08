@@ -221,4 +221,31 @@ class TransaccionController():
         else:
             print("***********************************")
             print("Saldo insuficiente.")
-    
+    @staticmethod
+    def hacerAvance(cuenta, monto):
+        avance = CuentaBancaria.realizarRetiro(cuenta, monto)
+        if avance:
+            TransaccionController.imprimirReciboAvance(cuenta, monto)
+    @staticmethod
+    def imprimirReciboAvance(cuenta, monto):
+        print("***********************************")
+        print("...")
+        print("Retire el dinero")
+        print("***Billetes***")
+        transaccion = Transaccion.registrarAvance(cuenta, monto)
+        if transaccion:
+            print("***********************************")
+            print("...")
+            print("***Recibo***")
+            cuentaActualizada = CuentaBancaria.consultarCuenta(cuenta)
+            dt = datetime.now()
+            # ahora creamos la variable con la fecha de hoy
+            fecha = dt
+            print("Fecha del avance:", fecha)
+            print("Cuenta de retiro:", cuentaActualizada[1]) 
+            print("Tipo de cuenta:", cuentaActualizada[4])
+            print("Monto retirado:", monto)
+            print("Restante de tope:", cuentaActualizada[7])  
+            print("***********************************")
+            print("***Gracias por preferirnos***")
+          

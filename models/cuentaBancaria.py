@@ -50,4 +50,5 @@ class CuentaBancaria():
         mycursor.execute("SELECT * FROM cuenta_bancaria WHERE numero_cuenta = %s", (numero_cuenta,))
         resultado = mycursor.fetchone()
         return resultado
+    # @staticmethod
 # cuentaBancaria.store()
