@@ -1,5 +1,6 @@
 from controllers.retiroController import Retiro
 from controllers.avanceController import AvanceController
+from controllers.transferenciaController import TransferenciaController
 class Menu():
     @staticmethod
     def menuPrincipal():
@@ -26,7 +27,7 @@ class Menu():
         elif opcion == 2:
             AvanceController.principal()
         elif opcion == 3:
-            print("Realizar transferencia")
+            TransferenciaController.principal()
         elif opcion == 4:
             print("Escogiste pago")
         elif opcion == 5:
@@ -34,4 +35,5 @@ class Menu():
         else:
             print("Por favor digite una opción valida")
             Menu().menuPrincipal()
+    
 
