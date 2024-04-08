@@ -25,44 +25,57 @@ class Retiro():
         opcion = int(opcion)
         if opcion == 1:
             confirmarTarjeta = TarjetaController.insertarTarjeta()
-            if confirmarTarjeta:
-                cuenta = CuentaBancaria.consultarCuenta(confirmarTarjeta)
-                tipoCuenta = cuenta[4]
-                if tipoCuenta == 'AHORRO':
-                    seleccionarMonto = TransaccionController()
-                    resultado = seleccionarMonto.seleccionaMonto(confirmarTarjeta)
-                    if resultado:
-                        opcion = resultado[0]
-                        tarjeta = resultado[1]
-                        transaccion = TransaccionController.opcionMonto(opcion, tarjeta)
-                        if transaccion:
-                            cuenta = transaccion[0]
-                            monto = transaccion[1]
-                            TransaccionController.imprimirRecibo(cuenta, monto)
-                else:
-                    print("***********************************")
-                    print("...")
-                    print('En esta opcion solamente puede realizar retiros de cuentas de ahorro')
+            tipoTarjeta = confirmarTarjeta[3]
+            if tipoTarjeta == 'DEBITO':
+                if confirmarTarjeta:
+                    cuenta = CuentaBancaria.consultarCuenta(confirmarTarjeta)
+                    tipoCuenta = cuenta[4]
+                    if tipoCuenta == 'AHORRO':
+                        seleccionarMonto = TransaccionController()
+                        resultado = seleccionarMonto.seleccionaMonto(confirmarTarjeta)
+                        if resultado:
+                            opcion = resultado[0]
+                            tarjeta = resultado[1]
+                            transaccion = TransaccionController.opcionMonto(opcion, tarjeta)
+                            if transaccion:
+                                cuenta = transaccion[0]
+                                monto = transaccion[1]
+                                TransaccionController.imprimirRecibo(cuenta, monto)
+                    else:
+                        print("***********************************")
+                        print("...")
+                        print('En esta opcion solamente puede realizar retiros de cuentas de ahorro')
+            else:
+                print("***********************************")
+                print("...")
+                print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
         elif opcion == 2:
             confirmarTarjeta = TarjetaController.insertarTarjeta()
-            if confirmarTarjeta:
-                cuenta = CuentaBancaria.consultarCuenta(confirmarTarjeta)
-                tipoCuenta = cuenta[4]
-                if tipoCuenta == 'CORRIENTE':
-                    seleccionarMonto = TransaccionController()
-                    resultado = seleccionarMonto.seleccionaMonto(confirmarTarjeta)
-                    if resultado:
-                        opcion = resultado[0]
-                        tarjeta = resultado[1]
-                        transaccion = TransaccionController.opcionMonto(opcion, tarjeta)
-                        if transaccion:
-                            cuenta = transaccion[0]
-                            monto = transaccion[1]
-                            TransaccionController.imprimirRecibo(cuenta, monto)
-                else:
-                    print("***********************************")
-                    print("...")
-                    print('En esta opcion solamente puede realizar retiros de cuentas de ahorro')
+            tipoTarjeta = confirmarTarjeta[3]
+            if tipoTarjeta == 'DEBITO':
+                if confirmarTarjeta:
+                    cuenta = CuentaBancaria.consultarCuenta(confirmarTarjeta)
+                    tipoCuenta = cuenta[4]
+                    if tipoCuenta == 'CORRIENTE':
+                        seleccionarMonto = TransaccionController()
+                        resultado = seleccionarMonto.seleccionaMonto(confirmarTarjeta)
+                        if resultado:
+                            opcion = resultado[0]
+                            tarjeta = resultado[1]
+                            transaccion = TransaccionController.opcionMonto(opcion, tarjeta)
+                            if transaccion:
+                                cuenta = transaccion[0]
+                                monto = transaccion[1]
+                                TransaccionController.imprimirRecibo(cuenta, monto)
+                    else:
+                        print("***********************************")
+                        print("...")
+                        print('En esta opcion solamente puede realizar retiros de cuentas de ahorro')
+            else:
+                print("***********************************")
+                print("...")
+                print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
+        
         elif opcion == 3:
             print("***********************************")
             print("...")
