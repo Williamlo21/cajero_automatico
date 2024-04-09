@@ -29,3 +29,13 @@ class CuentaBancariaController():
         cuentaBancariaDestino = CuentaBancaria.consultarCuentaUser(numeroCuenta)
         if cuentaBancariaDestino:
             return cuentaBancariaDestino
+    @staticmethod
+    def realizarRetiro(cuenta, factura):
+        pago = CuentaBancaria.realizarRetiro(cuenta, factura)
+        if pago:
+            return True
+    @staticmethod
+    def consultarSaldo(cuenta):
+        saldo = CuentaBancaria.consultarSaldo(cuenta)
+        if saldo:
+            return saldo
