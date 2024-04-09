@@ -42,7 +42,7 @@ class Transaccion:
         fecha = dt.date()
         try:
             mycursor.execute("INSERT INTO transacciones (id, tipo_transaccion, cuenta_bancaria_origen_id, cuenta_bancaria_destino_id, saldo, descripcion, fecha)\
-                VALUES (null, 'TRANSFERENCIA', %s, %s, %s, %s, %s)", (id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldo, descripcion, fecha))
+                VALUES (null, 'TRANSFERENCIA', %s, %s, %s, %s, %s)", ( id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldo, descripcion, fecha,))
             conexion.mydb.commit()
             return True
         except Exception as e:

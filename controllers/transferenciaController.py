@@ -64,9 +64,6 @@ class TransferenciaController():
                                     saldoCuentaDestino = saldoCuentaDestino + monto
                                     transferencia = CuentaBancariaController.realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldoCuentaDestino, saldoCuentaOrigen, topeCuentaOrigen)
                                     if transferencia:
-                                        id_cuentaBancariaDestino = transferencia[0]
-                                        id_cuentaBancariaOrigen = transferencia[1]
-                                        numeroCuentaDestino = transferencia[2]
                                         transaccion = TransaccionController.registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, monto, descripcion)
                                         if transaccion:
                                             numeroCuentaOrigen = cuentaOrigen[1]
@@ -78,25 +75,29 @@ class TransferenciaController():
         elif opcion == 2:
             numeroCuenta = TransferenciaController.obtenerNumeroCuenta()
             cuentaBancariaDestino = CuentaBancariaController.consultarCuentaConNumero(numeroCuenta)
-            confirmar = TransferenciaController.mostrarCuenta(cuentaBancariaDestino)
             if cuentaBancariaDestino:
+                confirmar = TransferenciaController.mostrarCuenta(cuentaBancariaDestino)
                 if confirmar:
                     monto = TransferenciaController.solicitarMonto()
                     if monto:
                         saldoCuentaOrigen = cuentaOrigen[3]
                         topeCuentaOrigen = cuentaOrigen[7]
+                        id_cuentaBancariaOrigen = cuentaOrigen[0]
                         if saldoCuentaOrigen >= monto:
                             if topeCuentaOrigen >= monto:
                                 saldoCuentaOrigen = float(saldoCuentaOrigen)
                                 saldoCuentaOrigen = saldoCuentaOrigen - monto
                                 topeCuentaOrigen = float(topeCuentaOrigen)
                                 topeCuentaOrigen = topeCuentaOrigen - monto
+                                saldoCuentaDestino = cuentaBancariaDestino[5]
+                                saldoCuentaDestino = float(saldoCuentaDestino)
+                                saldoCuentaDestino = saldoCuentaDestino + monto
+                                id_cuentaBancariaDestino = cuentaBancariaDestino[0]
                                 descripcion = TransferenciaController.obtenerDescripcion()
-                                    id_cuentaBancariaDestino = transferencia[0]
-                                    id_cuentaBancariaOrigen = transferencia[1]
                                 transferencia = CuentaBancariaController.realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino,saldoCuentaDestino,saldoCuentaOrigen, topeCuentaOrigen)
+                                
                                 if transferencia:
-                                    numeroCuentaDestino = transferencia[2]
+                                    numeroCuentaDestino = cuentaBancariaDestino[2]
                                     transaccion = TransaccionController.registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, monto, descripcion)
                                     if transaccion:
                                         numeroCuentaOrigen = cuentaOrigen[1]

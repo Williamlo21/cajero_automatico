@@ -58,7 +58,8 @@ class CuentaBancaria():
         conexion = Conexion()
         mycursor = conexion.mycursor
         mycursor.execute("SELECT cuenta_bancaria.id, cuenta_bancaria.numero_cuenta, \
-                        cuenta_bancaria.tipo_cuenta, usuarios.nombres, usuarios.apellidos  FROM cuenta_bancaria\
+                        cuenta_bancaria.tipo_cuenta, usuarios.nombres, usuarios.apellidos,  \
+                        cuenta_bancaria.saldo FROM cuenta_bancaria\
                         JOIN usuarios ON usuarios.id = cuenta_bancaria.user_titular_id \
                         WHERE numero_cuenta = %s", (numero_cuenta,))
         resultado = mycursor.fetchone()
