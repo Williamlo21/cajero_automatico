@@ -31,4 +31,19 @@ class Transaccion:
             conexion.mydb.commit()
             return True
         except Exception as e:
-            print("Error al registrar el retiro:", e)
+            print("Error al registrar el avance:", e)
+    @staticmethod
+    def registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldo, descripcion):
+        conexion = Conexion()
+        mycursor = conexion.mycursor
+        
+        dt = datetime.now()
+        # ahora creamos la variable con la fecha de hoy
+        fecha = dt.date()
+        try:
+            mycursor.execute("INSERT INTO transacciones (id, tipo_transaccion, cuenta_bancaria_origen_id, cuenta_bancaria_destino_id, saldo, descripcion, fecha)\
+                VALUES (null, 'TRANSFERENCIA', %s, %s, %s, %s, %s)", ( id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldo, descripcion, fecha,))
+            conexion.mydb.commit()
+            return True
+        except Exception as e:
+            print("Error al registrar el avance:", e)

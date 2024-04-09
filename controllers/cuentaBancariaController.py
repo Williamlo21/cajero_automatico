@@ -12,3 +12,20 @@ class CuentaBancariaController():
         retiro = CuentaBancaria.realizarRetiro(cuenta, monto)
         if retiro:
             return True
+    @staticmethod
+    def consultarCuentaConTarjeta(tarjeta):
+        cuenta = CuentaBancaria.consultarCuenta(tarjeta)
+        if cuenta:
+            return cuenta
+    @staticmethod
+    def realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldoCuentaDestino, saldoCuentaOrigen,topeCuentaOrigen):
+        
+        transferencia = CuentaBancaria.realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldoCuentaDestino, topeCuentaOrigen, saldoCuentaOrigen)
+        if transferencia:
+            return True
+    
+    @staticmethod
+    def consultarCuentaConNumero(numeroCuenta):
+        cuentaBancariaDestino = CuentaBancaria.consultarCuentaUser(numeroCuenta)
+        if cuentaBancariaDestino:
+            return cuentaBancariaDestino
