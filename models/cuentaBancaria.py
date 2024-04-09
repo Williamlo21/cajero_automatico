@@ -76,5 +76,5 @@ class CuentaBancaria():
             
             return True
         except Exception as e:
-            print("Error al realizar el retiro:", e)
+            print("Error al realizar la transferencia:", e)
 # cuentaBancaria.store()
