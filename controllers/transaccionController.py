@@ -270,7 +270,10 @@ class TransaccionController():
         print("***Gracias por preferirnos***")
     @staticmethod
     def registrarPagoServicio(cuenta, factura):
-        pago = Transaccion.registrarRetiro(cuenta, factura)
+        pago = Transaccion.registrarPagoServicio(cuenta, factura)
+
+        if pago:
+            return True
     @staticmethod
     def imprimirReciboPago(cuenta, monto):
         print("***********************************")

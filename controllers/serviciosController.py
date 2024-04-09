@@ -105,3 +105,105 @@ class ServicioController():
                     print("***********************************")
                     print("...")
                     print("Su tarjeta es de Credito, para hacer pagos con tarjeta de credito seleccione la opción.")
+        elif metodo == 2:
+            tarjeta = TarjetaController.insertarTarjeta()
+            if tarjeta:
+                tipoTarjeta = tarjeta[3]
+                if tipoTarjeta == 'CREDITO':
+                    cuenta = CuentaBancariaController.consultarCuentaConTarjeta(tarjeta)
+                    if cuenta:
+                        saldoCuenta = cuenta[3]
+                        saldoCuenta = float(saldoCuenta)
+                        topeCuenta = cuenta[7]
+                        topeCuenta = float(topeCuenta)
+                        factura = servicio[3]
+                        factura = float(factura)
+                        if saldoCuenta >= factura:
+                            if topeCuenta >= factura:
+                                pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
+                                if pago:
+                                    transaccion = TransaccionController.registrarPagoServicio
+                                    if transaccion:
+                                        TransaccionController.imprimirReciboPago(cuenta, factura)
+                            else:
+                                print("***********************************")
+                                print("...")
+                                print("Tope diario superado.")
+                        else:
+                            print("***********************************")
+                            print("...")
+                            print("Saldo insuficiente.")
+                else:
+                    print("***********************************")
+                    print("...")
+                    print("Su tarjeta es debito, para hacer pagos con tarjeta debito seleccione la opción.")
+        elif metodo == 3:
+            print("***********************************")
+            print("...")
+            numero_cuenta = input("Digite su número de nequi: ")
+            cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if cuenta:
+                tipoCuenta = cuenta[4]
+                if tipoCuenta == 'NEQUI':
+                    saldoCuenta = cuenta[3]
+                    saldoCuenta = float(saldoCuenta)
+                    topeCuenta = cuenta[7]
+                    topeCuenta = float(topeCuenta)
+                    factura = servicio[3]
+                    factura = float(factura)
+                    if saldoCuenta >= factura:
+                        if topeCuenta >= factura:
+                            pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
+                            if pago:
+                                transaccion = TransaccionController.registrarPagoServicio
+                                if transaccion:
+                                    TransaccionController.imprimirReciboPago(cuenta, factura)
+                        else:
+                            print("***********************************")
+                            print("...")
+                            print("Tope diario superado.")
+                    else:
+                        print("***********************************")
+                        print("...")
+                        print("Saldo insuficiente.")
+                else:
+                    print("***********************************")
+                    print("...")
+                    print("Esta opción es solo para pagos de servicios con nequi.")
+        elif metodo == 4:
+            print("***********************************")
+            print("...")
+            numero_cuenta = input("Digite su número de nequi: ")
+            cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if cuenta:
+                tipoCuenta = cuenta[4]
+                if tipoCuenta == 'A LA MANO':
+                    saldoCuenta = cuenta[3]
+                    saldoCuenta = float(saldoCuenta)
+                    topeCuenta = cuenta[7]
+                    topeCuenta = float(topeCuenta)
+                    factura = servicio[3]
+                    factura = float(factura)
+                    if saldoCuenta >= factura:
+                        if topeCuenta >= factura:
+                            pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
+                            if pago:
+                                transaccion = TransaccionController.registrarPagoServicio(cuenta, factura)
+                                if transaccion:
+                                    TransaccionController.imprimirReciboPago(cuenta, factura)
+                        else:
+                            print("***********************************")
+                            print("...")
+                            print("Tope diario superado.")
+                    else:
+                        print("***********************************")
+                        print("...")
+                        print("Saldo insuficiente.")
+                else:
+                    print("***********************************")
+                    print("...")
+                    print("Esta opción es solo para pagos de servicios con bancolombia a la mano.")
+        elif metodo == 5:
+            print("Gracias por visitarnos, ¡Vuelve pronto!")
+        else:
+            print("Opción invalida.")
