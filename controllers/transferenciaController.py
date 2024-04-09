@@ -70,7 +70,58 @@ class TransferenciaController():
                             else:
                                 print("Saldo insuficiente.")
         elif opcion == 2:
-            print("Cuentas no inscritas")
+            numeroCuenta = TransferenciaController.obtenerNumeroCuenta()
+            cuentaBancariaDestino = CuentaBancariaController.consultarCuentaConNumero(numeroCuenta)
+            confirmar = TransferenciaController.mostrarCuenta(cuentaBancariaDestino)
+            if cuentaBancariaDestino:
+                cuentaBancariaDestino = str(cuentaBancariaDestino)
+                cuentaBancariaDestino = opciones[cuentaBancariaDestino]
+                monto = TransferenciaController.solicitarMonto()
+                if monto:
+                    saldoCuentaOrigen = cuentaOrigen[3]
+                    topeCuentaOrigen = cuentaOrigen[7]
+                    if saldoCuentaOrigen >= monto:
+                        if topeCuentaOrigen >= monto:
+                            saldoCuentaOrigen = float(saldoCuentaOrigen)
+                            saldoCuentaOrigen = saldoCuentaOrigen - monto
+                            topeCuentaOrigen = float(topeCuentaOrigen)
+                            topeCuentaOrigen = topeCuentaOrigen - monto
+                            descripcion = TransferenciaController.obtenerDescripcion()
+                            transferencia = CuentaBancariaController.realizarTransferencia(cuentaOrigen, cuentaBancariaDestino,saldoCuentaOrigen, topeCuentaOrigen, monto)
+                            if transferencia:
+                                id_cuentaBancariaDestino = transferencia[0]
+                                id_cuentaBancariaOrigen = transferencia[1]
+                                numeroCuentaDestino = transferencia[2]
+                                transaccion = TransaccionController.registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, monto, descripcion)
+                                if transaccion:
+                                    numeroCuentaOrigen = cuentaOrigen[1]
+                                    TransaccionController.imprimirReciboTransferencia(numeroCuentaOrigen,numeroCuentaDestino,monto, descripcion)
+                        else:
+                            print("Tope diario superado.")
+                    else:
+                        print("Saldo insuficiente.")
+    @staticmethod
+    def obtenerNumeroCuenta():
+        print("***********************************")
+        print("...")
+        while True:
+            numeroCuenta = input("Digite el número de cuenta de destino: ")
+            if numeroCuenta:
+                return numeroCuenta
+            else:
+                print("Por favor digite un número de cuenta valido")
+        
+        CuentaBancariaDestino = input("Escriba la cuenta de destino: ")
+    @staticmethod
+    def mostrarCuenta(cuenta):
+        numeroCuenta = cuenta[1]
+        tipoCuenta = cuenta[2]
+        titular = cuenta[3]
+        print("***********************************")
+        print("...")
+        print("Numero de cuenta: ", numeroCuenta)
+        print("Tipo de cuenta: ", tipoCuenta)
+        print("titular: ", titular)
     @staticmethod
     def obtenerDescripcion():
         print("***********************************")

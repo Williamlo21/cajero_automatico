@@ -29,3 +29,8 @@ class CuentaBancariaController():
         transferencia = CuentaBancaria.realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldoCuentaDestino, topeCuentaOrigen, saldoCuentaOrigen)
         if transferencia:
             return id_cuentaBancariaDestino, id_cuentaBancariaOrigen, numeroCuentaDestino
+    @staticmethod
+    def consultarCuentaConNumero(numeroCuenta):
+        cuentaBancariaDestino = CuentaBancaria.consultarCuentaSinTarjeta(numeroCuenta)
+        if cuentaBancariaDestino:
+            return cuentaBancariaDestino

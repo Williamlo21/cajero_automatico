@@ -24,9 +24,11 @@ class CuentaBancaria():
     def realizarRetiro(cuenta, monto):
         idCuenta = cuenta[0]
         topeCuenta = cuenta[7]
-        topeCuenta = decimal.Decimal(topeCuenta)
+        monto = float(monto)
+        topeCuenta = float(topeCuenta)
         tope = topeCuenta - monto
         montoCuenta = cuenta[3]
+        montoCuenta = float(montoCuenta)
         montoDescontar = montoCuenta - monto
         conexion = Conexion()
         mycursor = conexion.mycursor
@@ -38,7 +40,7 @@ class CuentaBancaria():
             print("Error al realizar el retiro:", e)
     @staticmethod
     def consultarSaldo(cuenta):
-        idCuenta = cuenta[1]
+        idCuenta = cuenta[0]
         conexion = Conexion()
         mycursor = conexion.mycursor
         mycursor.execute("SELECT * FROM cuenta_bancaria WHERE id = %s", (idCuenta,))
@@ -49,6 +51,16 @@ class CuentaBancaria():
         conexion = Conexion()
         mycursor = conexion.mycursor
         mycursor.execute("SELECT * FROM cuenta_bancaria WHERE numero_cuenta = %s", (numero_cuenta,))
+        resultado = mycursor.fetchone()
+        return resultado
+    @staticmethod
+    def consultarCuentaUser(numero_cuenta):
+        conexion = Conexion()
+        mycursor = conexion.mycursor
+        mycursor.execute("SELECT cuenta_bancaria.id, cuenta_bancaria.numero_cuenta, \
+                        cuenta_bancaria.tipo_cuenta, usuarios.nombres, usuarios.apellidos  FROM cuenta_bancaria\
+                        JOIN usuarios ON usuarios.id = cuenta_bancaria.user_titular_id \
+                        WHERE numero_cuenta = %s", (numero_cuenta,))
         resultado = mycursor.fetchone()
         return resultado
     @staticmethod

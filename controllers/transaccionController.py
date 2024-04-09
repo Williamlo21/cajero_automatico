@@ -108,10 +108,12 @@ class TransaccionController():
             print("***********************************")
             print("...")
             print("***Recibo***")
-            cuentaActualizada = CuentaBancaria.consultarCuenta(cuenta)
+            cuentaActualizada = CuentaBancaria.consultarSaldo(cuenta)
             dt = datetime.now()
             # ahora creamos la variable con la fecha de hoy
             fecha = dt
+            print(cuenta)
+            print(cuentaActualizada)
             print("Fecha del retiro:", fecha)
             print("Cuenta de retiro:", cuentaActualizada[1]) 
             print("Tipo de cuenta:", cuentaActualizada[4])
