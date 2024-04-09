@@ -248,4 +248,23 @@ class TransaccionController():
             print("Restante de tope:", cuentaActualizada[7])  
             print("***********************************")
             print("***Gracias por preferirnos***")
-          
+    @staticmethod
+    def registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, monto, descripcion):
+        transaccion = Transaccion.registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, monto, descripcion)
+        if transaccion:
+            return True
+    @staticmethod
+    def imprimirReciboTransferencia(cuentaOrigen, cuentaDestino, monto, descripcion):
+        print("***********************************")
+        print("...")
+        print("***Recibo***")
+        dt = datetime.now()
+        # ahora creamos la variable con la fecha de hoy
+        fecha = dt
+        print("Fecha de la transferencia:", fecha)
+        print("Cuenta de origen:", cuentaOrigen) 
+        print("Cuenta de destino:", cuentaDestino)
+        print("Monto transferido:", monto)
+        print("Descripción: ", descripcion)
+        print("***********************************")
+        print("***Gracias por preferirnos***")

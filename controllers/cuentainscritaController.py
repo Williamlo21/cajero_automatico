@@ -19,6 +19,7 @@ class CuentaInscritaController():
             tipo_cuenta = cuenta[2]
             nombres = cuenta[3]
             apellidos = cuenta[4]
+            saldo = cuenta[5]
             print("------------------------------------")
             print("Cuenta No.", i)
             
@@ -29,7 +30,7 @@ class CuentaInscritaController():
             print("------------------------------------")
             opcion = str(i)  # Podrías usar el número de cuenta como opción si lo deseas
             i = i+1
-            descripcion_cuenta = f"Cuenta {id} -{numero_cuenta} - {tipo_cuenta} - {nombres} {apellidos}"
+            descripcion_cuenta = f"{id} - {numero_cuenta} - {tipo_cuenta} - {nombres} - {apellidos} - {saldo}"
             opciones[opcion] = descripcion_cuenta
         
         

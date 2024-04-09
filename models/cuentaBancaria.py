@@ -51,5 +51,18 @@ class CuentaBancaria():
         mycursor.execute("SELECT * FROM cuenta_bancaria WHERE numero_cuenta = %s", (numero_cuenta,))
         resultado = mycursor.fetchone()
         return resultado
-    # @staticmethod
+    @staticmethod
+    def realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldoCuentaDestino, topeCuentaOrigen, saldoCuentaOrigen):
+        conexion = Conexion()
+        mycursor = conexion.mycursor
+        try:    
+            # actualizar cuenta destino
+            mycursor.execute("UPDATE cuenta_bancaria SET saldo = %s WHERE id = %s",(saldoCuentaDestino, id_cuentaBancariaDestino,))
+            mycursor.execute("UPDATE cuenta_bancaria SET saldo = %s, tope = %s WHERE id = %s",(saldoCuentaOrigen, topeCuentaOrigen, id_cuentaBancariaOrigen,))
+            conexion.mydb.commit()
+            # actualizar cuenta origen
+            
+            return True
+        except Exception as e:
+            print("Error al realizar el retiro:", e)
 # cuentaBancaria.store()

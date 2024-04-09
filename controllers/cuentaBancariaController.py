@@ -17,4 +17,15 @@ class CuentaBancariaController():
         cuenta = CuentaBancaria.consultarCuenta(tarjeta)
         if cuenta:
             return cuenta
-    
+    @staticmethod
+    def realizarTransferencia(cuentaBancariaOrigen, cuentaBancariaDestino,saldoCuentaOrigen,topeCuentaOrigen, monto):
+        id_cuentaBancariaOrigen = cuentaBancariaOrigen[0]
+        llaveCuentaDestino = cuentaBancariaDestino.split(" - ")
+        id_cuentaBancariaDestino = llaveCuentaDestino[0]
+        numeroCuentaDestino = llaveCuentaDestino[1]
+        saldoCuentaDestino = llaveCuentaDestino[5]
+        saldoCuentaDestino = float(saldoCuentaDestino)
+        saldoCuentaDestino = saldoCuentaDestino + monto
+        transferencia = CuentaBancaria.realizarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, saldoCuentaDestino, topeCuentaOrigen, saldoCuentaOrigen)
+        if transferencia:
+            return id_cuentaBancariaDestino, id_cuentaBancariaOrigen, numeroCuentaDestino

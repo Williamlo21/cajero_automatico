@@ -9,7 +9,7 @@ class CuentaInscrita():
         mycursor.execute("SELECT cuenta_bancaria_inscrita.id, cuenta_bancaria_inscrita.numero_cuenta, \
                         cuenta_bancaria_inscrita.tipo_cuenta,  \
                         usuarios.nombres, \
-                        usuarios.apellidos \
+                        usuarios.apellidos, cuenta_bancaria_inscrita.saldo \
                         FROM cuentas_inscritas \
                         JOIN cuenta_bancaria ON cuenta_bancaria.id = cuentas_inscritas.cuenta_bancaria_id \
                         JOIN cuenta_bancaria AS cuenta_bancaria_inscrita ON cuenta_bancaria_inscrita.id = cuentas_inscritas.cuenta_bancaria_inscrita_id \

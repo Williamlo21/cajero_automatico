@@ -1,6 +1,7 @@
 from controllers.tarjetaController import TarjetaController
 from controllers.cuentaBancariaController import CuentaBancariaController
 from controllers.cuentainscritaController import CuentaInscritaController
+from controllers.transaccionController import TransaccionController
 class TransferenciaController():
     
     @staticmethod
@@ -50,13 +51,36 @@ class TransferenciaController():
                             topeCuentaOrigen = cuentaOrigen[7]
                             if saldoCuentaOrigen >= monto:
                                 if topeCuentaOrigen >= monto:
-                                    print("podemos transferir?")
+                                    saldoCuentaOrigen = float(saldoCuentaOrigen)
+                                    saldoCuentaOrigen = saldoCuentaOrigen - monto
+                                    topeCuentaOrigen = float(topeCuentaOrigen)
+                                    topeCuentaOrigen = topeCuentaOrigen - monto
+                                    descripcion = TransferenciaController.obtenerDescripcion()
+                                    transferencia = CuentaBancariaController.realizarTransferencia(cuentaOrigen, cuentaBancariaDestino,saldoCuentaOrigen, topeCuentaOrigen, monto)
+                                    if transferencia:
+                                        id_cuentaBancariaDestino = transferencia[0]
+                                        id_cuentaBancariaOrigen = transferencia[1]
+                                        numeroCuentaDestino = transferencia[2]
+                                        transaccion = TransaccionController.registrarTransferencia(id_cuentaBancariaOrigen, id_cuentaBancariaDestino, monto, descripcion)
+                                        if transaccion:
+                                            numeroCuentaOrigen = cuentaOrigen[1]
+                                            TransaccionController.imprimirReciboTransferencia(numeroCuentaOrigen,numeroCuentaDestino,monto, descripcion)
                                 else:
                                     print("Tope diario superado.")
                             else:
                                 print("Saldo insuficiente.")
         elif opcion == 2:
             print("Cuentas no inscritas")
+    @staticmethod
+    def obtenerDescripcion():
+        print("***********************************")
+        print("...")
+        while True:
+            descripcion = input("Descripción: ")
+            if descripcion:
+                return descripcion
+            else:
+                print("Por favor ingrese una descripción.")
     @staticmethod
     def solicitarMonto():
         print("***********************************")
