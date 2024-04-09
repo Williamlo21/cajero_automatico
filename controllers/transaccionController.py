@@ -268,3 +268,25 @@ class TransaccionController():
         print("Descripción: ", descripcion)
         print("***********************************")
         print("***Gracias por preferirnos***")
+    @staticmethod
+    def registrarPagoServicio(cuenta, factura):
+        pago = Transaccion.registrarPagoServicio(cuenta, factura)
+
+        if pago:
+            return True
+    @staticmethod
+    def imprimirReciboPago(cuenta, monto):
+        print("***********************************")
+        print("...")
+        print("***Recibo***")
+        cuentaActualizada = CuentaBancaria.consultarSaldo(cuenta)
+        dt = datetime.now()
+        # ahora creamos la variable con la fecha de hoy
+        fecha = dt
+        print("Fecha del avance:", fecha)
+        print("Cuenta de retiro:", cuentaActualizada[1]) 
+        print("Tipo de cuenta:", cuentaActualizada[4])
+        print("Factura: ", monto)
+        print("Restante de tope:", cuentaActualizada[7])  
+        print("***********************************")
+        print("***Gracias por preferirnos***")
