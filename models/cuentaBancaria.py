@@ -78,4 +78,15 @@ class CuentaBancaria():
             return True
         except Exception as e:
             print("Error al realizar la transferencia:", e)
-# cuentaBancaria.store()
+    @staticmethod
+    def cambiarNumeroCuenta(idCuenta, numero_cuenta):
+        conexion = Conexion()
+        mycursor = conexion.mycursor
+        try:    
+            # actualizar clave
+            mycursor.execute("UPDATE cuenta_bancaria SET numero_cuenta = %s WHERE id = %s",( numero_cuenta, idCuenta,))
+            conexion.mydb.commit()
+            
+            return True
+        except Exception as e:
+            print("Error al cambiar la clave:", e)

@@ -35,5 +35,9 @@ class TarjetaController():
             print("...")
             print("Código de verificación errado.")
             print("Por favor intente nuevamente.")
-    # @staticmethod
+    @staticmethod
+    def cambiarClaveTarjeta(nuevaClave, numero_tarjeta):
+        cambioClave = Tarjeta.cambiarClaveTarjeta(nuevaClave, numero_tarjeta)
+        if cambioClave:
+            return True
     

@@ -30,3 +30,16 @@ class Tarjeta():
     
         else:
             print("Tarjeta invalida.")
+    @staticmethod
+    def cambiarClaveTarjeta(nuevaClave, numero_tarjeta):
+        conexion = Conexion()
+        mycursor = conexion.mycursor
+        try:    
+            # actualizar clave
+            mycursor.execute("UPDATE tarjetas SET clave = %s WHERE numero_tarjeta = %s",(nuevaClave, numero_tarjeta,))
+            conexion.mydb.commit()
+            
+            return True
+        except Exception as e:
+            print("Error al cambiar la clave:", e)
+    

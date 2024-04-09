@@ -2,6 +2,7 @@ from controllers.retiroController import Retiro
 from controllers.avanceController import AvanceController
 from controllers.transferenciaController import TransferenciaController
 from controllers.serviciosController import ServicioController
+from controllers.claveController import ClaveController
 class Menu():
     @staticmethod
     def menuPrincipal():
@@ -10,7 +11,8 @@ class Menu():
             "2" : "Realizar avance.",
             "3" : "Realizar transferencia.",
             "4" : "Pago de servicios.",
-            "5" : "Salir",
+            "5" : "Cambio de clave",
+            "6" : "Salir",
         }
         
         for clave, valor in opciones.items():
@@ -32,6 +34,8 @@ class Menu():
         elif opcion == 4:
             ServicioController.comenzarPago()
         elif opcion == 5:
+            ClaveController.cambioDeClave()
+        elif opcion == 6:
             print("Gracias por visitarnos, ¡Vuelve pronto!")
         else:
             print("Por favor digite una opción valida")

@@ -39,3 +39,13 @@ class CuentaBancariaController():
         saldo = CuentaBancaria.consultarSaldo(cuenta)
         if saldo:
             return saldo
+    @staticmethod
+    def consultarCuentaUser(numero_cuenta):
+        cuenta = CuentaBancaria.consultarCuentaUser(numero_cuenta)
+        if cuenta:
+            return cuenta
+    @staticmethod
+    def cambiarNumerocuenta(idCuenta, numeroCuenta):
+        cuenta = CuentaBancaria.cambiarNumeroCuenta(idCuenta, numeroCuenta)
+        if cuenta:
+            return True
