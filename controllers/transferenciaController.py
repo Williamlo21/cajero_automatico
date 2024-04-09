@@ -211,62 +211,58 @@ class TransferenciaController():
                     print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
         elif opcion == 2:
             tarjeta = TarjetaController.insertarTarjeta()
-            tipoTarjeta = tarjeta[3]
-            if tipoTarjeta == 'DEBITO':
-                if tarjeta:
+            if tarjeta:
+                tipoTarjeta = tarjeta[3]
+                if tipoTarjeta == 'DEBITO':
                     cuenta = CuentaBancariaController.consultarCuentaConTarjeta(tarjeta)
                     tipoCuenta = cuenta[4]
                     if tipoCuenta == 'CORRIENTE':
                         opcion = TransferenciaController.menuTransferencias()
-                        TransferenciaController.opcionMenu(opcion)
+                        TransferenciaController.opcionMenu(opcion, cuenta)
                     else:
                         print("***********************************")
                         print("...")
                         print('En esta opcion solamente puede realizar transferencias desde cuentas corriente')
+                else:
+                    print("***********************************")
+                    print("...")
+                    print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
             else:
                 print("***********************************")
                 print("...")
                 print("Su tarjeta es de Credito, para realizar avances seleccione la opción de realizar avances.")
-        # elif opcion == 3:
-        #     print("***********************************")
-        #     print("...")
-        #     numero_cuenta = input("Digite su número de nequi: ")
-        #     cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
-        #     if cuenta:
-        #         tipoCuenta = cuenta[4]
-        #         if tipoCuenta == 'NEQUI':
-        #             codigo = TarjetaController.codigoMensaje()
-        #             if codigo:
-        #                 opcion = TransaccionController.seleccionaMontoConCuenta()
-        #                 if opcion:
-        #                     monto = TransaccionController.opcionMontoConCuenta(opcion, numero_cuenta)
-        #                     if monto:
-        #                         retiro = CuentaBancariaController.realizarRetiroConCuenta(numero_cuenta, monto)
-        #                         if retiro:
-        #                             TransaccionController.imprimirRecibo(cuenta, monto)
-        #         else:
-        #             print("***********************************")
-        #             print("...")
-        #             print('En esta opcion solamente puede realizar retiros de Nequi')
+        elif opcion == 3:
+            print("***********************************")
+            print("...")
+            numero_cuenta = input("Digite su número de nequi: ")
+            cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if cuenta:
+                tipoCuenta = cuenta[4]
+                if tipoCuenta == 'NEQUI':
+                    codigo = TarjetaController.codigoMensaje()
+                    if codigo:
+                        opcion = TransferenciaController.menuTransferencias()
+                        if opcion:
+                            TransferenciaController.opcionMenu(opcion, cuenta)
+                else:
+                    print("***********************************")
+                    print("...")
+                    print('En esta opcion solamente puede realizar retiros de Nequi')
             
-        # elif opcion == 4:
-        #     print("***********************************")
-        #     print("...")
-        #     numero_cuenta = input("Digite su número de ahorro a la mano: ")
-        #     cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
-        #     if cuenta:
-        #         tipoCuenta = cuenta[4]
-        #         if tipoCuenta == 'A LA MANO':
-        #             codigo = TarjetaController.codigoMensaje()
-        #             if codigo:
-        #                 opcion = TransaccionController.seleccionaMontoConCuenta()
-        #                 if opcion:
-        #                     monto = TransaccionController.opcionMontoConCuenta(opcion, numero_cuenta)
-        #                     if monto:
-        #                         retiro = CuentaBancariaController.realizarRetiroConCuenta(numero_cuenta, monto)
-        #                         if retiro:
-        #                             TransaccionController.imprimirRecibo(cuenta, monto)
-        #         else:
-        #             print("***********************************")
-        #             print("...")
-        #             print('En esta opcion solamente puede realizar retiros de Ahorro a la mano')
+        elif opcion == 4:
+            print("***********************************")
+            print("...")
+            numero_cuenta = input("Digite su número de ahorro a la mano: ")
+            cuenta = CuentaBancariaController.consultarCuentaSinTarjeta(numero_cuenta)
+            if cuenta:
+                tipoCuenta = cuenta[4]
+                if tipoCuenta == 'A LA MANO':
+                    codigo = TarjetaController.codigoMensaje()
+                    if codigo:
+                        opcion = TransferenciaController.menuTransferencias()
+                        if opcion:
+                            TransferenciaController.opcionMenu(opcion, cuenta)
+                else:
+                    print("***********************************")
+                    print("...")
+                    print('En esta opcion solamente puede realizar retiros de Ahorro a la mano')
