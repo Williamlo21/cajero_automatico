@@ -145,27 +145,29 @@ class ServicioController():
             if cuenta:
                 tipoCuenta = cuenta[4]
                 if tipoCuenta == 'NEQUI':
-                    saldoCuenta = cuenta[3]
-                    saldoCuenta = float(saldoCuenta)
-                    topeCuenta = cuenta[7]
-                    topeCuenta = float(topeCuenta)
-                    factura = servicio[3]
-                    factura = float(factura)
-                    if saldoCuenta >= factura:
-                        if topeCuenta >= factura:
-                            pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
-                            if pago:
-                                transaccion = TransaccionController.registrarPagoServicio
-                                if transaccion:
-                                    TransaccionController.imprimirReciboPago(cuenta, factura)
+                    pago = TarjetaController.codigoMensaje()
+                    if pago:
+                        saldoCuenta = cuenta[3]
+                        saldoCuenta = float(saldoCuenta)
+                        topeCuenta = cuenta[7]
+                        topeCuenta = float(topeCuenta)
+                        factura = servicio[3]
+                        factura = float(factura)
+                        if saldoCuenta >= factura:
+                            if topeCuenta >= factura:
+                                pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
+                                if pago:
+                                    transaccion = TransaccionController.registrarPagoServicio
+                                    if transaccion:
+                                        TransaccionController.imprimirReciboPago(cuenta, factura)
+                            else:
+                                print("***********************************")
+                                print("...")
+                                print("Tope diario superado.")
                         else:
                             print("***********************************")
                             print("...")
-                            print("Tope diario superado.")
-                    else:
-                        print("***********************************")
-                        print("...")
-                        print("Saldo insuficiente.")
+                            print("Saldo insuficiente.")
                 else:
                     print("***********************************")
                     print("...")
@@ -178,27 +180,29 @@ class ServicioController():
             if cuenta:
                 tipoCuenta = cuenta[4]
                 if tipoCuenta == 'A LA MANO':
-                    saldoCuenta = cuenta[3]
-                    saldoCuenta = float(saldoCuenta)
-                    topeCuenta = cuenta[7]
-                    topeCuenta = float(topeCuenta)
-                    factura = servicio[3]
-                    factura = float(factura)
-                    if saldoCuenta >= factura:
-                        if topeCuenta >= factura:
-                            pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
-                            if pago:
-                                transaccion = TransaccionController.registrarPagoServicio(cuenta, factura)
-                                if transaccion:
-                                    TransaccionController.imprimirReciboPago(cuenta, factura)
+                    pago = TarjetaController.codigoMensaje()
+                    if pago:
+                        saldoCuenta = cuenta[3]
+                        saldoCuenta = float(saldoCuenta)
+                        topeCuenta = cuenta[7]
+                        topeCuenta = float(topeCuenta)
+                        factura = servicio[3]
+                        factura = float(factura)
+                        if saldoCuenta >= factura:
+                            if topeCuenta >= factura:
+                                pago = CuentaBancariaController.realizarRetiro(cuenta, factura)
+                                if pago:
+                                    transaccion = TransaccionController.registrarPagoServicio(cuenta, factura)
+                                    if transaccion:
+                                        TransaccionController.imprimirReciboPago(cuenta, factura)
+                            else:
+                                print("***********************************")
+                                print("...")
+                                print("Tope diario superado.")
                         else:
                             print("***********************************")
                             print("...")
-                            print("Tope diario superado.")
-                    else:
-                        print("***********************************")
-                        print("...")
-                        print("Saldo insuficiente.")
+                            print("Saldo insuficiente.")
                 else:
                     print("***********************************")
                     print("...")

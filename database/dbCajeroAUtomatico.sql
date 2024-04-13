@@ -19,21 +19,17 @@
 CREATE DATABASE IF NOT EXISTS `cajero_automatico` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `cajero_automatico`;
 
--- Volcando estructura para tabla cajero_automatico.cuentas_inscritas
-CREATE TABLE IF NOT EXISTS `cuentas_inscritas` (
+-- Volcando estructura para tabla cajero_automatico.usuarios
+CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `cuenta_bancaria_id` bigint unsigned NOT NULL,
-  `cuenta_bancaria_inscrita_id` bigint unsigned NOT NULL,
-  `create_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nombres` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `numero_documento` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cuenta_inscrita_unica` (`cuenta_bancaria_id`,`cuenta_bancaria_inscrita_id`),
-  KEY `FK_cuentas_inscritas_cuenta_bancaria_2` (`cuenta_bancaria_inscrita_id`),
-  CONSTRAINT `FK_cuentas_inscritas_cuenta_bancaria` FOREIGN KEY (`cuenta_bancaria_id`) REFERENCES `cuenta_bancaria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_cuentas_inscritas_cuenta_bancaria_2` FOREIGN KEY (`cuenta_bancaria_inscrita_id`) REFERENCES `cuenta_bancaria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `usuario_unico` (`nombres`,`apellidos`,`numero_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla cajero_automatico.cuentas_inscritas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla cajero_automatico.usuarios: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla cajero_automatico.cuenta_bancaria
 CREATE TABLE IF NOT EXISTS `cuenta_bancaria` (
@@ -53,16 +49,6 @@ CREATE TABLE IF NOT EXISTS `cuenta_bancaria` (
 
 -- Volcando datos para la tabla cajero_automatico.cuenta_bancaria: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla cajero_automatico.servicios
-CREATE TABLE IF NOT EXISTS `servicios` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `referencia` varchar(50) NOT NULL,
-  `servicio` varchar(50) NOT NULL,
-  `factura` float unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Volcando datos para la tabla cajero_automatico.servicios: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla cajero_automatico.tarjetas
 CREATE TABLE IF NOT EXISTS `tarjetas` (
@@ -101,17 +87,32 @@ CREATE TABLE IF NOT EXISTS `transacciones` (
 
 -- Volcando datos para la tabla cajero_automatico.transacciones: ~0 rows (aproximadamente)
 
--- Volcando estructura para tabla cajero_automatico.usuarios
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(50) NOT NULL,
-  `apellidos` varchar(50) NOT NULL,
-  `numero_documento` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `usuario_unico` (`nombres`,`apellidos`,`numero_documento`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla cajero_automatico.usuarios: ~0 rows (aproximadamente)
+-- Volcando estructura para tabla cajero_automatico.cuentas_inscritas
+CREATE TABLE IF NOT EXISTS `cuentas_inscritas` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `cuenta_bancaria_id` bigint unsigned NOT NULL,
+  `cuenta_bancaria_inscrita_id` bigint unsigned NOT NULL,
+  `create_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cuenta_inscrita_unica` (`cuenta_bancaria_id`,`cuenta_bancaria_inscrita_id`),
+  KEY `FK_cuentas_inscritas_cuenta_bancaria_2` (`cuenta_bancaria_inscrita_id`),
+  CONSTRAINT `FK_cuentas_inscritas_cuenta_bancaria` FOREIGN KEY (`cuenta_bancaria_id`) REFERENCES `cuenta_bancaria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_cuentas_inscritas_cuenta_bancaria_2` FOREIGN KEY (`cuenta_bancaria_inscrita_id`) REFERENCES `cuenta_bancaria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla cajero_automatico.cuentas_inscritas: ~0 rows (aproximadamente)
+-- Volcando estructura para tabla cajero_automatico.servicios
+CREATE TABLE IF NOT EXISTS `servicios` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `referencia` varchar(50) NOT NULL,
+  `servicio` varchar(50) NOT NULL,
+  `factura` float unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Volcando datos para la tabla cajero_automatico.servicios: ~0 rows (aproximadamente)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

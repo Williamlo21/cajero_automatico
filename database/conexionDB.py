@@ -13,6 +13,7 @@ class Conexion():
         self.mycursor = self.mydb.cursor()
         # funcion para crear la base de datos
         # self.mycursor = self.crearDatabase()
+        
 
     def crearDatabase(self):
 
